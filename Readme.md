@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Анна Игнатова](https://up.htmlacademy.ru/javascript-individual/2/user/2275573).
-* Наставник: `Неизвестно`.
+* Наставник: [Денис Лопатин] (https://htmlacademy.ru/profile/denislopatin).
 
 ---
 
