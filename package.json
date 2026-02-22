@@ -13,15 +13,21 @@
   "devDependencies": {
     "eslint": "8.48.0",
     "eslint-config-htmlacademy": "9.1.1",
-    "vite": "4.4.9"
+    "vite": "4.4.9",
+    "vitest": "^4.0.18"
   },
   "license": "MIT",
   "scripts": {
     "start": "vite --port 3000 --open",
-    "lint": "eslint js/"
+    "lint": "eslint js/",
+    "test": "vitest --run --reporter verbose",
+    "test:watch": "vitest"
   },
   "engines": {
     "node": "^20",
     "npm": "^10"
+  },
+  "volta": {
+    "node": "20.20.0"
   }
 }
