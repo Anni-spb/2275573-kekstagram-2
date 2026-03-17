@@ -5,7 +5,7 @@ const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const fragment = document.createDocumentFragment();
 
-const createThumbnail = ({data}) => {
+const createThumbnail = (data) => {
   const thumbnail = pictureTemplate.cloneNode(true);
   const img = thumbnail.querySelector('.picture__img');
   img.src = data.url;
