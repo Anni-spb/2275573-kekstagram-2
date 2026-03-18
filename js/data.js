@@ -79,7 +79,7 @@ const createComment = () => ({
  * @returns {Post}
  */
 const createPost = () => ({
-  id: postId++,
+  id: postId,
   url: `photos/${postId++}.jpg`,
   likes: getRandomInteger(LIKES_COUNT.min, LIKES_COUNT.max),
   description: getRandomArrayElement(DESCRIPTION),
@@ -91,4 +91,3 @@ const createPost = () => ({
  * @returns {Post[]}
  */
 export const createPosts = () => Array.from({length: POST_COUNT}, createPost);
-
