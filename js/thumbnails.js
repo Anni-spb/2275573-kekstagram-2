@@ -1,4 +1,5 @@
 import {createPosts} from './data.js';
+import {renderModal} from './big-Picture.js';
 
 const posts = createPosts ();
 const picturesContainer = document.querySelector('.pictures');
@@ -14,10 +15,19 @@ const createThumbnail = ({description, url, likes, comments}) => {
   thumbnail.querySelector('.picture__likes').textContent = likes;
   thumbnail.querySelector('.picture__comments').textContent = comments.length;
 
+  thumbnail.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    renderModal({description, url, likes, comments});
+  });
+
   fragment.append(thumbnail);
 };
 
 const renderThumbnails = () => {
+  if(!picturesContainer) {
+    return;
+  }
+
   posts.forEach((post) => createThumbnail(post));
   picturesContainer.append(fragment);
 };
