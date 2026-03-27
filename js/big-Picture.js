@@ -8,11 +8,27 @@ const LikesCounter = modalContainer.querySelector('.likes-count');
 const commentsList = modalContainer.querySelector('.social__comments');
 const commentsItem = modalContainer.querySelector('.social__comment');
 const commentsLoader = modalContainer.querySelector('.comments-loader');
-const commentCount = document.querySelector('.social__comment-count');
+const commentsShownCounter = modalContainer.querySelector('.social__comment-shown-count');
+const commentsTotalCounter = modalContainer.querySelector('.social__comment-total-count');
 
 const COMMENTS_INTERVAL = 5;
 let showComments = 0;
 let comments = [];
+
+const resetModal = () => {
+  commentsList.innerHTML = '';
+  showComments = 0;
+};
+
+const updateCommentsCounter = () => {
+
+  if (showComments > comments.length) {
+    showComments = comments.length;
+  }
+
+  commentsShownCounter.textContent = showComments;
+  commentsTotalCounter.textContent = comments.length;
+};
 
 const hideCommentsLoader = () => {
   if (showComments >= comments.length) {
@@ -27,18 +43,16 @@ const hideCommentsLoader = () => {
 const createComment = ({avatar, name, message}) => {
   const newComment = commentsItem.cloneNode(true);
   const img = newComment.querySelector('.social__picture');
+  const commentText = newComment.querySelector('.social__text');
 
   img.src = avatar;
   img.alt = name;
-  newComment.querySelector('.social__text').textContent = message;
+  commentText.textContent = message;
 
   return newComment;
 };
 
 const openModal = () => {
-  commentsList.innerHTML = '';
-  showComments = 0;
-
   modalContainer.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
@@ -54,10 +68,6 @@ const closeModal = () => {
   modalCloseButton.removeEventListener('click', onModalCloseButtonClick);
   document.removeEventListener('keydown', onDocumentKeydown);
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
-};
-
-const updateCommentsCounter = () => {
-  commentCount.innerHTML = `<span class="social__comment-shown-count">${showComments}</span> из <span class="social__comment-total-count">${comments.length}</span> комментариев`;
 };
 
 const createComments = () => {
@@ -80,6 +90,7 @@ const createPhotoInfo = ({description, url, likes}) => {
 const renderModal = (post) => {
   comments = post.comments;
 
+  resetModal ();
   openModal();
   createPhotoInfo(post);
   createComments();
@@ -95,6 +106,7 @@ function onDocumentKeydown(evt) {
     closeModal();
   }
 }
+
 function onCommentsLoaderClick() {
   createComments();
 }
