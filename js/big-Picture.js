@@ -15,7 +15,7 @@ const COMMENTS_INTERVAL = 5;
 let showComments = 0;
 let comments = [];
 
-const resetModal = () => {
+const resetComments = () => {
   commentsList.innerHTML = '';
   showComments = 0;
 };
@@ -90,7 +90,7 @@ const createPhotoInfo = ({description, url, likes}) => {
 const renderModal = (post) => {
   comments = post.comments;
 
-  resetModal ();
+  resetComments ();
   openModal();
   createPhotoInfo(post);
   createComments();
