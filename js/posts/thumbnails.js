@@ -1,5 +1,5 @@
-import {createPosts} from './data.js';
-import {renderModal} from './big-Picture.js';
+import {createPosts} from '../posts/data.js';
+import {renderModal} from '../posts/gallery.js';
 
 const posts = createPosts ();
 const picturesContainer = document.querySelector('.pictures');

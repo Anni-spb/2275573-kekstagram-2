@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomArrayElement} from './utils.js';
+import {getRandomInteger, getRandomArrayElement} from '../utils.js';
 
 export const POST_COUNT = 25;
 export const COMMENTS_COUNT = {min: 0, max: 30};
