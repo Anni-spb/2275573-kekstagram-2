@@ -4,7 +4,7 @@ const CAPTION_MAX_LENGTH = 140;
 const INVALID_HASHTAG_UNIQUE = 'Один и тот же хэштег не может быть использован дважды';
 const INVALID_HASHTAG_SYMBOLS = 'Хэштег начинается с # и может состоять только из букв и цифр длиной не больше 20 символов';
 const INVALID_HASHTAG_COUNT = `Нельзя использовать больше ${HASHTAGS_MAX_COUNT} хэштегов`;
-const INVALID_CAPTION = 'Длина комментария не может составлять больше 140 символов';
+const INVALID_CAPTION = `Длина комментария не может составлять больше ${CAPTION_MAX_LENGTH} символов`;
 
 const form = document.querySelector('.img-upload__form');
 const hashtagsInput = document.querySelector('.text__hashtags');

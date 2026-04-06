@@ -1,10 +1,14 @@
 import {isEscapeKey} from '../utils.js';
 import {validatePristine, setPristine, resetPristine} from './validate.js';
+import {setPhotoScale, resetPhotoScale} from './scale.js';
+import {createSlider, updateSliderOptions} from './effects.js';
 
 const uploadInput = document.querySelector('.img-upload__input');
 const form = document.querySelector('.img-upload__form');
 const formModal = document.querySelector('.img-upload__overlay');
 const formCloseButton = document.querySelector('.img-upload__cancel');
+const effectsControl = document.querySelector('.effects__list');
+const checkedEffect = document.querySelector('.effects__radio[checked]');
 
 const openForm = () => {
   formModal.classList.remove('hidden');
@@ -17,6 +21,10 @@ const openForm = () => {
 const closeForm = () => {
   form.reset();
   resetPristine();
+  resetPhotoScale();
+  updateSliderOptions(checkedEffect.value);
+  uploadInput.value = '';
+
 
   formModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -43,7 +51,6 @@ function onDocumentKeydown(evt) {
 
   if (isEscapeKey(evt) && !hashtagsInput && !captionInput) {
     evt.preventDefault();
-
     closeForm();
   }
 }
@@ -52,11 +59,18 @@ function onUploadInputChange() {
   openForm();
 }
 
-const initFormAction = () => {
-  setPristine();
+function onEffectsControlChange(evt) {
+  updateSliderOptions(evt.target.value);
+}
 
+const initFormAction = () => {
   uploadInput.addEventListener('change', onUploadInputChange);
   form.addEventListener('submit', onFormSubmit);
+  effectsControl.addEventListener('change', onEffectsControlChange);
+
+  setPristine();
+  setPhotoScale();
+  createSlider(checkedEffect.value);
 };
 
 export {initFormAction};
