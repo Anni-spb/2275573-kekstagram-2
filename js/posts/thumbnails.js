@@ -1,7 +1,5 @@
-import {createPosts} from '../posts/data.js';
 import {renderModal} from '../posts/gallery.js';
 
-const posts = createPosts ();
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const fragment = document.createDocumentFragment();
@@ -23,7 +21,7 @@ const createThumbnail = ({description, url, likes, comments}) => {
   fragment.append(thumbnail);
 };
 
-const renderThumbnails = () => {
+const renderThumbnails = (posts) => {
   if(!picturesContainer) {
     return;
   }

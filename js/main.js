@@ -1,5 +1,5 @@
-import {renderThumbnails} from './posts/thumbnails.js';
+import {initPosts} from './posts/data.js';
 import {initFormAction} from './form/form.js';
 
-renderThumbnails ();
+initPosts();
 initFormAction();

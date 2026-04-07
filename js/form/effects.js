@@ -1,5 +1,6 @@
 const EFFECTS = {
   default: {
+    filter: 'none',
     range: {
       min: 0,
       max: 100,
@@ -85,11 +86,12 @@ const setSliderValue = (effect, value) => {
 
     return;
   }
+
   previewPhoto.style.filter = `${effect.filter}(${value}${effect.unit})`;
 };
 
 const updateSlider = (effect) => {
-  slider.noUiSlider.off();
+  slider.noUiSlider.off('update');
 
   slider.noUiSlider.on('update', () => {
     sliderInput.value = slider.noUiSlider.get();
