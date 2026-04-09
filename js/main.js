@@ -1,5 +1,5 @@
-import {initPosts} from './posts/data.js';
+import {getData} from './api/api.js';
 import {initFormAction} from './form/form.js';
 
-initPosts();
+getData();
 initFormAction();

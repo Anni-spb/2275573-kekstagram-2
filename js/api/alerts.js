@@ -2,22 +2,36 @@ import {isEscapeKey} from '../utils';
 
 const TIME_REMOVE = 5000;
 
-let template;
+const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
+const errorMessageData = document.querySelector('#data-error').content.querySelector('.data-error');
 
-const renderMessage = (item, value) => {
-  template = item.cloneNode(true);
-  document.body.append(template);
-
-  const messageButton = template.querySelector(`.${value}__button`);
-  messageButton.addEventListener('click', onMessageButtonClick);
+const renderMessage = (element, buttonClass) => {
+  document.body.append(element);
+  const messageCloseButton = element.querySelector(buttonClass);
+  messageCloseButton.addEventListener('click', onMessageButtonClick);
   document.addEventListener('keydown', onDocumentKeydown);
-  document.body.addEventListener('click', onDodyClick);
+  document.addEventListener('click', onDocumentClick);
 };
 
+const createFormSuccessMessage = () => {
+  const newSuccessMessage = successMessageTemplate.cloneNode(true);
+  renderMessage(newSuccessMessage, '.success__button');
+};
+
+const createFormErrorMessage = () => {
+  const newErrorMessage = errorMessageTemplate.cloneNode(true);
+  renderMessage(newErrorMessage, '.error__button');
+};
+
+
 const closeMessage = () => {
-  template.remove();
+  const message = document.querySelector('.success') || document.querySelector('.error');
+
+  message.remove();
+
   document.removeEventListener('keydown', onDocumentKeydown);
-  document.body.removeEventListener('click', onDodyClick);
+  document.removeEventListener('click', onDocumentClick);
 };
 
 function onMessageButtonClick() {
@@ -31,7 +45,7 @@ function onDocumentKeydown(evt) {
   }
 }
 
-function onDodyClick(evt) {
+function onDocumentClick(evt) {
   const success = evt.target.closest('.success__inner');
   const error = evt.target.closest('.error__inner');
 
@@ -41,13 +55,11 @@ function onDodyClick(evt) {
   closeMessage();
 }
 
-const renderError = (item) => {
-  template = item.cloneNode(true);
-  document.body.append(template);
+const createError = () => {
+  const newErrorMessage = errorMessageData.cloneNode(true);
+  document.body.append(newErrorMessage);
 
-  setTimeout(() => {
-    template.remove();
-  }, TIME_REMOVE);
+  setTimeout(() => newErrorMessage.remove(), TIME_REMOVE);
 };
 
-export {renderMessage, renderError};
+export {createFormSuccessMessage, createFormErrorMessage, createError};

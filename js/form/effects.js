@@ -1,135 +1,126 @@
 const EFFECTS = {
-  default: {
+  none: {
     filter: 'none',
-    range: {
-      min: 0,
-      max: 100,
-    },
-
-    start: 100,
+    min: 0,
+    max: 100,
     step: 1,
+    unit: ''
   },
 
   chrome: {
     filter: 'grayscale',
-    range: {
-      min: 0,
-      max: 1,
-    },
-
-    start: 1,
+    min: 0,
+    max: 1,
     step: 0.1,
-    unit: '',
+    unit: ''
   },
 
   sepia: {
     filter: 'sepia',
-    range: {
-      min: 0,
-      max: 1,
-    },
-
-    start: 1,
+    min: 0,
+    max: 1,
     step: 0.1,
-    unit: '',
+    unit: ''
   },
 
   marvin: {
     filter: 'invert',
-    range: {
-      min: 0,
-      max: 100,
-    },
-
-    start: 100,
+    min: 0,
+    max: 100,
     step: 1,
-    unit: '%',
+    unit: '%'
   },
 
   phobos: {
     filter: 'blur',
-    range: {
-      min: 0,
-      max: 3,
-    },
-
-    start: 3,
+    min: 0,
+    max: 3,
     step: 0.1,
-    unit: 'px',
+    unit: 'px'
   },
 
   heat: {
     filter: 'brightness',
-    range: {
-      min: 1,
-      max: 3,
-    },
-
-    start: 3,
+    min: 1,
+    max: 3,
     step: 0.1,
-    unit: '',
-  },
+    unit: ''
+  }
 };
 
 const previewPhoto = document.querySelector('.img-upload__preview img');
-const sliderContainer = document.querySelector('.img-upload__effect-level');
-const sliderInput = document.querySelector('.effect-level__value');
+const effectValue = document.querySelector('.effect-level__value');
 const slider = document.querySelector('.effect-level__slider');
+const effectLevel = document.querySelector('.effect-level');
 
-const setSliderEffect = (value) => EFFECTS[value] || EFFECTS.default;
-
-const setSliderStatus = (effect) => sliderContainer.classList.toggle('hidden', effect === EFFECTS.default);
-
-const setSliderValue = (effect, value) => {
-  if (effect === EFFECTS.default) {
-    previewPhoto.style.filter = null;
-
+const setSliderState = (target) => {
+  if (target.matches('#effect-none')) {
+    effectLevel.classList.add('hidden');
+    previewPhoto.style.filter = '';
     return;
   }
 
-  previewPhoto.style.filter = `${effect.filter}(${value}${effect.unit})`;
+  effectLevel.classList.remove('hidden');
 };
 
-const updateSlider = (effect) => {
-  slider.noUiSlider.off('update');
+const createSlider = (target) => {
+  let currentValue = target.value;
+  if (!EFFECTS[currentValue]) {
+    currentValue = 'none';
+  }
 
-  slider.noUiSlider.on('update', () => {
-    sliderInput.value = slider.noUiSlider.get();
-    setSliderValue(effect, sliderInput.value);
-  });
-};
-
-const createSlider = (value) => {
-  const effect = setSliderEffect(value);
-
-  setSliderStatus(effect);
-  noUiSlider.create(slider, {
+  noUiSlider.create(slider , {
     range: {
-      min: effect.range.min,
-      max: effect.range.max,
+      min: EFFECTS[currentValue].min,
+      max: EFFECTS[currentValue].max
     },
-    start: effect.start,
-    step: effect.step,
-    connect: 'lower',
+    start: EFFECTS[currentValue].max,
+    step: EFFECTS[currentValue].step,
+    connect: 'lower'
   });
 
-  updateSlider(effect);
+  slider.noUiSlider.off('update');
+  slider.noUiSlider.on('update', () => {
+    effectValue.value = parseFloat(slider.noUiSlider.get());
+    previewPhoto.style.filter = `${EFFECTS[currentValue].filter}(${effectValue.value}${EFFECTS[currentValue].unit})`;
+  });
 };
 
-const updateSliderOptions = (value) => {
-  const effect = setSliderEffect(value);
+const updateEffects = (target) => {
+  let currentValue = target.value;
 
-  setSliderStatus(effect);
+  if (!EFFECTS[currentValue]) {
+    currentValue = 'none';
+  }
+
   slider.noUiSlider.updateOptions({
     range: {
-      min: effect.range.min,
-      max: effect.range.max,
+      min: EFFECTS[currentValue].min,
+      max: EFFECTS[currentValue].max
     },
-    start: effect.start,
-    step: effect.step,
+    start: EFFECTS[currentValue].max,
+    step: EFFECTS[currentValue].step,
+    connect: 'lower'
   });
 
-  updateSlider(effect);
+  slider.noUiSlider.off('update');
+  slider.noUiSlider.on('update', () => {
+    effectValue.value = parseFloat(slider.noUiSlider.get());
+    previewPhoto.style.filter = `${EFFECTS[currentValue].filter}(${effectValue.value}${EFFECTS[currentValue].unit})`;
+  });
 };
 
-export {createSlider, updateSliderOptions};
+const initSlider = (target) => {
+  if (!slider.noUiSlider) {
+    createSlider(target);
+  }
+
+  setSliderState(target);
+};
+
+const onEffectsListChange = (evt) => {
+  updateEffects(evt.target);
+  setSliderState(evt.target);
+};
+
+export {onEffectsListChange, initSlider};
