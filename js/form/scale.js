@@ -17,21 +17,21 @@ const updateScale = (value) => {
   previewPhoto.style.transform = `scale(${value / PERCENT})`;
 };
 
-function buttonZoomOutClickHandler() {
+function onButtonZoomOutClick() {
   const stepBack = Math.max(getInputValue() - SCALE_STEP, MIN_SCALE);
 
   updateScale(stepBack);
 }
 
-function buttonZoomInClickHandler() {
+function onButtonZoomInClick() {
   const stepForward = Math.min(getInputValue() + SCALE_STEP, MAX_SCALE);
 
   updateScale(stepForward);
 }
 
 const setPhotoScale = () => {
-  buttonZoomOut.addEventListener('click', buttonZoomOutClickHandler);
-  buttonZoomIn.addEventListener('click', buttonZoomInClickHandler);
+  buttonZoomOut.addEventListener('click', onButtonZoomOutClick);
+  buttonZoomIn.addEventListener('click', onButtonZoomInClick);
 };
 
 const resetPhotoScale = () => updateScale(DEFAULT_VALUE);

@@ -1,5 +1,7 @@
 import {isEscapeKey} from '../utils.js';
 
+const COMMENTS_INTERVAL = 5;
+
 const modalContainer = document.querySelector('.big-picture');
 const modalCloseButton = modalContainer.querySelector('.big-picture__cancel');
 const bigPicture = modalContainer.querySelector('.big-picture__img img');
@@ -11,7 +13,6 @@ const commentsLoader = modalContainer.querySelector('.comments-loader');
 const commentsShownCounter = modalContainer.querySelector('.social__comment-shown-count');
 const commentsTotalCounter = modalContainer.querySelector('.social__comment-total-count');
 
-const COMMENTS_INTERVAL = 5;
 let showComments = 0;
 let comments = [];
 

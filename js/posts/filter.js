@@ -17,7 +17,7 @@ const createRandomPosts = (posts) => {
 
 const createDiscussedPosts = (posts) => posts.slice().sort((currentPost, nextPost) => nextPost.comments.length - currentPost.comments.length);
 
-const currentFilter = (evt) => {
+const changeCurrentFilter = (evt) => {
   document.querySelector(`.${CURRENT_FILTER}`).classList.remove(`${CURRENT_FILTER}`);
   evt.target.classList.add(`${CURRENT_FILTER}`);
 };
@@ -28,7 +28,7 @@ const isButtonSort = (evt) => {
     return;
   }
 
-  currentFilter(evt);
+  changeCurrentFilter(evt);
 };
 
 function onFilterButtonClick(evt, posts) {
